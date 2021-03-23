@@ -10,5 +10,8 @@ run:build
 memory-check:build
 	valgrind --leak-check=full ./${EXECUTABLE}
 
+pack:
+	zip -r DochianAlexandruAdrian335CC.zip src GNUmakefile Makefile README
+
 clean:
 	rm -rf *.o so-cpp

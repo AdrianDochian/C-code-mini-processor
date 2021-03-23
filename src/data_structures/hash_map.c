@@ -19,6 +19,22 @@ void freeHashMap(HashMap **hashMap) {
     free(*hashMap);
 }
 
+void removeFromList(List *items, char *key) {
+    HashMapEntry *temp = items->element;
+    while (temp != NULL) {
+        if (strcmp(temp->key, key) == 0) {
+            free(temp->value);
+            temp->value = NULL;
+            return;
+        }
+        temp = temp->nextEntry;
+    }
+}
+
+void removeFromHashMap(HashMap *hashMap, char *key) {
+    removeFromList(&(hashMap->items[hash(key)]), key);
+}
+
 void addToHashMap(HashMap *hashMap, char *key, char *value) {
     addToList(&(hashMap->items[hash(key)]), key, value);
 }
@@ -49,7 +65,16 @@ void addToList(List *items, char *key, char *value) {
 void insertLast(HashMapEntry **head, char *key, char *value) {
     HashMapEntry *temp = *head;
 
-    do {
+    // particular case of one element in a list that may be updated
+    if (temp->nextEntry == NULL && strcmp(temp->key, key) == 0) {
+        // update the value
+        free(temp->value);
+        temp->value = (char *) malloc((strlen(value) + 1) * sizeof(char));
+        strcpy(temp->value, value);
+        return;
+    }
+
+    while (temp->nextEntry != NULL) {
         // if already in hashmap
         if (strcmp(temp->key, key) == 0) {
             // update the value
@@ -61,8 +86,7 @@ void insertLast(HashMapEntry **head, char *key, char *value) {
 
         // go find the last node or the existing key to replace the value
         temp = temp->nextEntry;
-    } while (temp->nextEntry != NULL);
-
+    }
     // the key was not found in the list => add it
     temp->nextEntry = getHashMapEntry(key, value);
 }

@@ -3,7 +3,7 @@
 
 #include "../utils/headers.h"
 
-#define HASH_MAP_SIZE 20
+#define HASH_MAP_SIZE 1
 
 // STRUCT DEFINITIONS
 typedef struct HashMapEntry {
@@ -25,6 +25,10 @@ typedef struct HashMap {
 void initHashMap(HashMap **hashMap);
 
 void freeHashMap(HashMap **hashMap);
+
+void removeFromList(List *items, char *key);
+
+void removeFromHashMap(HashMap *hashMap, char *key);
 
 void addToHashMap(HashMap *hashMap, char *key, char *value);
 
