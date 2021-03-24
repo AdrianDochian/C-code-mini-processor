@@ -3,7 +3,7 @@
 
 #include "../utils/headers.h"
 
-#define HASH_MAP_SIZE 1
+#define HASH_MAP_SIZE 50
 
 // STRUCT DEFINITIONS
 typedef struct HashMapEntry {

@@ -1,5 +1,23 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Tema1 SO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Pentru verificarea temei copiati executabilul tema1 in
-acelasi director cu scriptul de testare (run_all.sh) si apelati:
+HASH MAP:
+    -> Hash map-ul este o structură `HashMap` care ține în componența
+        sa un array de structuri `List`.
+    -> Un element de tipul `List` ține în componența sa un pointer către
+        primul nod din lista de elemente `HashMapEntry`
+    -> Funcția de hash se face cu suma în ascii a caracterelor
+        cheii modulo HASH_MAP_SIZE
 
-make -f Makefile.checker
+LOGICA:
+    -> se inițializează hash map-ul
+    -> se parsează parametrii
+    -> se parsează inputul cu următoarele logici de posibile înlocuiri:
+        1) `#define`-uri
+        2) `#undef`-uri
+    -> Înlocuiește fiecare cheie găsită cu valoarea ei din hash map
+        dacă o găsește
+    -> Se dezalocă memoria
+
+MENȚIUNI:
+    Nu am terminat tema din cauză faptului că i-am alocat prea puțin timp.
+    O temă interesantă :).
