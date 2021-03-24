@@ -102,7 +102,7 @@ void replaceLine(char **line, char *toBeReplaced, char *valueForReplace) {
     free(tempBuffer);
 }
 
-void parseAndAddToHashMap (char *buffer, HashMap *hashMap) {
+void parseAndAddToHashMap(char *buffer, HashMap *hashMap) {
     char *delimiters = "\n ";
     char key[SMALL_BUFFERS_SIZE];
     char value[SMALL_BUFFERS_SIZE];
