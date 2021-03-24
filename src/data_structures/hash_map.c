@@ -1,17 +1,21 @@
 #include "../utils/headers.h"
 
 void initHashMap(HashMap **hashMap) {
+    int i;
+
     *hashMap = malloc(sizeof(HashMap));
     (*hashMap)->size = HASH_MAP_SIZE;
     (*hashMap)->items = (List *) malloc((*hashMap)->size * sizeof(List));
 
-    for (int i = 0; i < (*hashMap)->size; i++) {
+    for (i = 0; i < (*hashMap)->size; i++) {
         (*hashMap)->items[i].element = NULL;
     }
 }
 
 void freeHashMap(HashMap **hashMap) {
-    for (int i = 0; i < (*hashMap)->size; i++) {
+    int i;
+
+    for (i = 0; i < (*hashMap)->size; i++) {
         freeList(&((*hashMap)->items[i].element));
     }
 
@@ -117,7 +121,9 @@ HashMapEntry *getHashMapEntry(char *key, char *value) {
 }
 
 void printHashMap(HashMap *hashMap) {
-    for (int i = 0; i < hashMap->size; i++) {
+    int i;
+
+    for (i = 0; i < hashMap->size; i++) {
         printList(i, hashMap->items[i].element);
     }
 }
@@ -131,8 +137,9 @@ void printList(int index, HashMapEntry *head) {
 
 int hash(char *key) {
     int index = 0;
+    int i;
 
-    for (int i = 0; i < strlen(key); i++) {
+    for (i = 0; i < strlen(key); i++) {
         index += key[i];
     }
 

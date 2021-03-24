@@ -6,10 +6,14 @@ void freeMemoryAndExit(HashMap **hashMap) {
 }
 
 void parseSymbolMapping(char *symbolMapping, HashMap *hashMap) {
-    char *symbol = calloc(SMALL_BUFFERS_SIZE, sizeof(char));
-    char *mapping = calloc(SMALL_BUFFERS_SIZE, sizeof(char));
+    char *symbol;
+    char *mapping;
+    char *pointerToEqualChar;
 
-    char *pointerToEqualChar = strstr(symbolMapping, "=");
+    symbol = (char *) calloc(SMALL_BUFFERS_SIZE, sizeof(char));
+    mapping = (char *) calloc(SMALL_BUFFERS_SIZE, sizeof(char));
+
+    pointerToEqualChar = (char *) strstr(symbolMapping, "=");
 
     if (pointerToEqualChar == NULL) {
         strcpy(symbol, symbolMapping);
@@ -28,8 +32,8 @@ void parseInput(int argc, char **argv, HashMap *hashMap, FILE **input, FILE **ou
     int currentIsSymbol = 0;
     int currentIsDirectory = 0;
     int currentIsOutputFile = 0;
-
-    for (int i = 1; i < argc; i++) {
+    int i;
+    for (i = 1; i < argc; i++) {
         if (currentIsOutputFile) {
             *output = fopen(argv[i], "w");
             currentIsOutputFile = 0;
@@ -106,10 +110,10 @@ void parseAndAddToHashMap(char *buffer, HashMap *hashMap) {
     char *delimiters = "\n ";
     char key[SMALL_BUFFERS_SIZE];
     char value[SMALL_BUFFERS_SIZE];
-
     char *token;
-    token = strtok(buffer, delimiters);
     int tokenNumber = 0;
+
+    token = strtok(buffer, delimiters);
     while (token != NULL) {
         if (strcmp(token, "#define") != 0) {
             if (tokenNumber++ == 0) {
@@ -138,6 +142,9 @@ int main(int argc, char **argv) {
     char *delimiters = "\t []{}<>=+-*/%!&|^.,:;()\\";
     FILE *input = NULL;
     FILE *output = NULL;
+    int doneWithDefines = 0;
+    char *lineToWrite;
+    char *token;
 
     initHashMap(&hashMap);
 
@@ -145,7 +152,6 @@ int main(int argc, char **argv) {
     input = input == NULL ? stdin : input;
     output = output == NULL ? stdout : output;
 
-    int doneWithDefines = 0;
     while (fgets(buffer, BUFFER_SIZE, input) != NULL) {
         if (strstr(buffer, "#define") != NULL) {
             parseAndAddToHashMap(buffer, hashMap);
@@ -162,10 +168,9 @@ int main(int argc, char **argv) {
         }
 
         doneWithDefines = 1;
-        char *lineToWrite = calloc(strlen(buffer) + 1, sizeof(char));
+        lineToWrite = calloc(strlen(buffer) + 1, sizeof(char));
         strcpy(lineToWrite, buffer);
 
-        char *token;
         token = strtok(buffer, delimiters);
         while (token != NULL) {
             char *possibleValue = getValueFromHashMap(hashMap, token);
